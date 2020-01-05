@@ -1,0 +1,16 @@
+version: '3.6'
+
+
+services:
+  api:
+    image: nginx:latest
+    volumes:
+      # Load examples data as suppliers store
+      - "./htdocs/web/:/var/www/html/:ro"
+    ports:
+      - "80:80"
+
+  parser:
+    build: .docker/
+    volumes:
+      - "./:/app"
