@@ -1,27 +1,22 @@
 <?php
 
 
-namespace Supplier2;
+namespace Supplier3;
+
 
 use Divante\Integration\IntegrationEvents;
 use Divante\Integration\Parser\ParserType;
 use Divante\Integration\Supplier\Event\GetProductsEvent;
 use Divante\Integration\Supplier\SupplierAbstract;
 
-
-/**
- * Class Supplier2
- *
- * @package Divante\Integration\Supplier
- */
-class Supplier2 extends SupplierAbstract
+class Supplier3 extends SupplierAbstract
 {
     /**
      * {@inheritdoc}
      */
     public static function getName()
     {
-        return "SUPPLIER2";
+        return "SUPPLIER3";
     }
 
     /**
@@ -29,7 +24,7 @@ class Supplier2 extends SupplierAbstract
      */
     public static function getResponseType()
     {
-        return "application/xml";
+        return "application/json";
     }
 
     /**
@@ -41,11 +36,12 @@ class Supplier2 extends SupplierAbstract
 
         $this->eventDispatcher->dispatch(
             IntegrationEvents::SUPPLIER_GET_PRODUCTS,
-            new GetProductsEvent($parsed['items'], self::getName())
+            new GetProductsEvent($parsed['products'], self::getName())
         );
 
-        return $parsed['items'];
+        return $parsed['products'];
     }
+
 
     /**
      * Simulate get response method
@@ -54,6 +50,6 @@ class Supplier2 extends SupplierAbstract
      */
     protected function getResponse()
     {
-        return file_get_contents('http://api/supplier2.xml');
+        return file_get_contents('http://api/supplier3.json');
     }
 }

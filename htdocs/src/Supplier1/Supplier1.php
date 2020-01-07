@@ -36,7 +36,7 @@ class Supplier1 extends SupplierAbstract
      */
     public static function getResponseType()
     {
-        return ParserType::PARSER_TYPE_XML;
+        return "application/xml";
     }
 
     /**

@@ -17,6 +17,7 @@ use Divante\Integration\Parser\ParserType;
 use Divante\Integration\Supplier\Listener\ProductsListener;
 use Supplier1\Supplier1;
 use Supplier2\Supplier2;
+use Supplier3\Supplier3;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -63,19 +64,29 @@ class Factory implements FactoryInterface
      */
     public function getSupplier($supplierName)
     {
+
         $upperSupplierName = strtoupper($supplierName);
-        if ($upperSupplierName === Supplier1::getName()) {
-            return new Supplier1(
-                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.$upperSupplierName),
-                $this->eventDispatcher
-            );
-        } elseif ($upperSupplierName === Supplier2::getName()) {
-            return new Supplier2(
-                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.$upperSupplierName),
-                $this->eventDispatcher
-            );
-        } else {
-            throw new \Exception("Missing supplier $supplierName");
+
+        switch ($upperSupplierName) {
+            case Supplier1::getName():
+                return new Supplier1(
+                    $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.Supplier1::getName()),
+                    $this->eventDispatcher
+                );
+            case Supplier2::getName():
+                return new Supplier2(
+                    $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.Supplier2::getName()),
+                    $this->eventDispatcher
+                );
+
+            case Supplier3::getName():
+                return new Supplier3(
+                    $this->parserFactory->getParser(ParserType::PARSER_TYPE_JSON.'_'.Supplier3::getName()),
+                    $this->eventDispatcher
+                );
+
+            default:
+                throw new \Exception("Missing supplier $supplierName");
         }
     }
 }

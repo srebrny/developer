@@ -7,6 +7,8 @@ use Supplier1\Parsers\ParserXML;
 use Supplier1\Supplier1;
 use Supplier2\Parsers\Supplier2XMLParser;
 use Supplier2\Supplier2;
+use Supplier3\Parsers\Supplier3JSONParser;
+use Supplier3\Supplier3;
 
 /**
  * Class Factory
@@ -28,8 +30,8 @@ class Factory implements FactoryInterface
             return new Supplier2XMLParser();
         }
 
-        if ($type === ParserType::PARSER_TYPE_JSON) {
-            return new ParserJson();
+        if ($type === ParserType::PARSER_TYPE_JSON.'_'.strtoupper(Supplier3::getName())) {
+            return new Supplier3JSONParser();
         }
 
         throw new \Exception("Missing parser types? \"$type\"?");
