@@ -40,7 +40,6 @@ class ProductsListener
      */
     public function __construct()
     {
-        var_dump(realpath(__DIR__));
         $this->logger = new Logger(
             'suppliers_logger',
             array(new StreamHandler(self::FILENAME_PATH, Logger::INFO))
