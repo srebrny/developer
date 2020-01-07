@@ -20,7 +20,8 @@
   "autoload": {
     "psr-4": {
       "Divante\\Integration\\": "src/Divante/Integration/",
-      "Supplier1\\": "src/Supplier1/"
+      "Supplier1\\": "src/Supplier1/",
+      "Supplier2\\": "src/Supplier2/"
     }
   }
 }

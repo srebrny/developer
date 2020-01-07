@@ -16,6 +16,7 @@ use Divante\Integration\Parser\FactoryInterface as ParserFactoryInterface;
 use Divante\Integration\Parser\ParserType;
 use Divante\Integration\Supplier\Listener\ProductsListener;
 use Supplier1\Supplier1;
+use Supplier2\Supplier2;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -62,10 +63,15 @@ class Factory implements FactoryInterface
      */
     public function getSupplier($supplierName)
     {
-        $lowerSupplierName = strtolower($supplierName);
-        if($lowerSupplierName === "supplier1") {
+        $upperSupplierName = strtoupper($supplierName);
+        if ($upperSupplierName === Supplier1::getName()) {
             return new Supplier1(
-                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML),
+                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.$upperSupplierName),
+                $this->eventDispatcher
+            );
+        } elseif ($upperSupplierName === Supplier2::getName()) {
+            return new Supplier2(
+                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML.'_'.$upperSupplierName),
                 $this->eventDispatcher
             );
         } else {

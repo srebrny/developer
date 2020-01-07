@@ -28,7 +28,7 @@ class Supplier1 extends SupplierAbstract
      */
     public static function getName()
     {
-        return "Supplier1";
+        return "SUPPLIER1";
     }
 
     /**
