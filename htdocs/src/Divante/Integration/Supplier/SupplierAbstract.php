@@ -58,6 +58,6 @@ abstract class SupplierAbstract implements SupplierInterface
      */
     public function getProducts()
     {
-        //TODO: write a code
+        return $this->parseResponse();
     }
 }

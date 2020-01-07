@@ -10,15 +10,30 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Divante\Integration\Parser\Factory as ParserFactory;
+use Divante\Integration\Supplier\Factory as SupplierFactory;
 use Symfony\Component\Console\Application;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Divante\Integration\Command\SupplierSync;
 
+
+// Define __APP__ directory path
+
+define("__APP__", realpath(__DIR__."/../"));
+
 $application = new Application();
+
+$dispatcher = new EventDispatcher();
+$application->setDispatcher($dispatcher);
+
 $application->add(
     new SupplierSync(
-        null
-        //TODO: write a code
+        "Supplier Sync",
+        new SupplierFactory(
+            new ParserFactory(),
+            $dispatcher
+        )
     )
 );
+
 $application->run();

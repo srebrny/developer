@@ -26,7 +26,7 @@ class ProductsListener
     /**
      * Filename path
      */
-    const FILENAME_PATH = '../log/supplier.log';
+    const FILENAME_PATH = __APP__.'/log/supplier.log';
 
     /**
      * Logger
@@ -40,6 +40,7 @@ class ProductsListener
      */
     public function __construct()
     {
+        var_dump(realpath(__DIR__));
         $this->logger = new Logger(
             'suppliers_logger',
             array(new StreamHandler(self::FILENAME_PATH, Logger::INFO))

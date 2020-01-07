@@ -64,10 +64,13 @@ class SupplierSync extends Command
     {
         $name = $input->getArgument('supplier');
 
-        try {
-            $products = [];
+        $output->writeln('Supplier requested : ' . $name);
 
-            //TODO: write a code
+        $supplier = $this->supplierFactory->getSupplier($name);
+
+        try {
+            $products = $supplier->getProducts();
+
 
             $table = new Table($output);
             $table->setHeaders(array('ID', 'Name', 'Desc'))->setRows($products);

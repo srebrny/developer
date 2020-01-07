@@ -1,16 +1,18 @@
 version: '3.6'
 
-
 services:
   api:
-    image: nginx:latest
-    volumes:
-      # Load examples data as suppliers store
-      - "./htdocs/web/:/var/www/html/:ro"
+    build:
+      dockerfile: ./.docker/nginx/Dockerfile
+      context: ./
     ports:
       - "80:80"
 
   parser:
-    build: .docker/
+    build:
+      dockerfile: .docker/parser/Dockerfile
+      context: ./
+    links:
+      - api
     volumes:
-      - "./:/app"
+      - "./htdocs:/app"

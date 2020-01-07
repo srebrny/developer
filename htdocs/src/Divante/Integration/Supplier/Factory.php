@@ -13,7 +13,9 @@ namespace Divante\Integration\Supplier;
 
 use Divante\Integration\IntegrationEvents;
 use Divante\Integration\Parser\FactoryInterface as ParserFactoryInterface;
+use Divante\Integration\Parser\ParserType;
 use Divante\Integration\Supplier\Listener\ProductsListener;
+use Supplier1\Supplier1;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
@@ -60,6 +62,14 @@ class Factory implements FactoryInterface
      */
     public function getSupplier($supplierName)
     {
-        //TODO: write a code
+        $lowerSupplierName = strtolower($supplierName);
+        if($lowerSupplierName === "supplier1") {
+            return new Supplier1(
+                $this->parserFactory->getParser(ParserType::PARSER_TYPE_XML),
+                $this->eventDispatcher
+            );
+        } else {
+            throw new \Exception("Missing supplier $supplierName");
+        }
     }
 }

@@ -9,7 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Divante\Integration\Supplier;
+namespace Supplier1;
+
+use Divante\Integration\IntegrationEvents;
+use Divante\Integration\Parser\ParserType;
+use Divante\Integration\Supplier\Event\GetProductsEvent;
+use Divante\Integration\Supplier\SupplierAbstract;
 
 /**
  * Class Supplier1
@@ -23,7 +28,7 @@ class Supplier1 extends SupplierAbstract
      */
     public static function getName()
     {
-        //TODO: write a code
+        return "Supplier1";
     }
 
     /**
@@ -31,7 +36,7 @@ class Supplier1 extends SupplierAbstract
      */
     public static function getResponseType()
     {
-        //TODO: write a code
+        return ParserType::PARSER_TYPE_XML;
     }
 
     /**
@@ -39,7 +44,14 @@ class Supplier1 extends SupplierAbstract
      */
     protected function parseResponse()
     {
-        //TODO: write a code
+        $parsed = $this->parser->parse($this->getResponse());
+
+        $this->eventDispatcher->dispatch(
+            IntegrationEvents::SUPPLIER_GET_PRODUCTS,
+            new GetProductsEvent($parsed['products'], self::getName())
+        );
+
+        return $parsed['products'];
     }
 
     /**
@@ -49,6 +61,6 @@ class Supplier1 extends SupplierAbstract
      */
     protected function getResponse()
     {
-        return file_get_contents('http://localhost/supplier1.xml');
+        return file_get_contents('http://api/supplier1.xml');
     }
 }
